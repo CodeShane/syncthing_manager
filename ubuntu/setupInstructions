@@ -1,0 +1,24 @@
+Create the user who should run the service, or choose an existing one.
+
+Copy the Syncthing/etc/system/syncthing@.service file into the load path of the system instance.
+
+Enable and start the service. Replace “bakman” with the actual Syncthing user after the @:
+
+systemctl enable syncthing@bakman.service
+systemctl start syncthing@bakman.service
+
+
+#step 2
+edit: /lib/systemd/system/syncthing@.service
+change ExecStart line to:
+ExecStart=/usr/bin/syncthing -home /etc/syncthing -no-restart -no-browser -logflags=0  >> "/etc/syncthing/log/syncthing_$(date +"%Y%m")" 2>/dev/null
+
+run to reload file: 
+sudo systemctl daemon-reload
+
+check status or start / stop:
+sudo systemctl status syncthing@bakman.service 
+sudo systemctl start syncthing@bakman.service 
+sudo systemctl stop syncthing@bakman.service 
+
+
